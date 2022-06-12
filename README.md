@@ -1,8 +1,8 @@
 # ResumeFilter
 
-ResumeFilter is a resume GUI pre-screening program.
+ResumeFilter is a GUI resume pre-screening program.
 
-# Feature
+# Features
 
 - 自动解压压缩包内的文件，可识别多种格式（.rar，.zip等）。
 
@@ -30,6 +30,8 @@ ResumeFilter is a resume GUI pre-screening program.
 
 # Known Issues
 
-- 如果压缩包内有相同文件名的文件（在不同目录下），会产生冲突。此时，只会列举其中一个文件。
-
 - ⚠️*警告*：在关闭主窗口前，需要关闭所有已打开的PDF文件。
+
+- 目前只支持pdf形式的简历。
+
+- 如果压缩包内有相同文件名的文件（在不同目录下），会产生冲突。此时，只会列举其中一个文件。
