@@ -79,15 +79,21 @@ func main() {
 	app.Settings().SetTheme(&theme.MyTheme{})
 
 	win := app.NewWindow(APP_NAME)
-	win.Resize(fyne.NewSize(600, 400))
 
-	// lets show button in parent window
+	// lets show GUI in parent window
 	win.SetContent(a.makeUI())
 	win.ShowAndRun()
 }
 
 func (c *CandControler) OnCheck(isCheck bool) {
 	c.IsCheck = isCheck
+}
+
+func (c *CandControler) OnButton() {
+	err := OpenFile(c.Cand.Path)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func (a *ArchiverControler) Open(filename string) error {
@@ -175,9 +181,7 @@ func (a *ArchiverControler) makeUI() *fyne.Container {
 	for _, c := range a.CandControlers {
 		check := widget.NewCheck("", c.OnCheck)
 
-		btn := widget.NewButton("打开", func() {
-
-		})
+		btn := widget.NewButton("打开", c.OnButton)
 
 		name := widget.NewLabel(filepath.Base(c.Cand.Path))
 		college := widget.NewLabel(c.Cand.College)
