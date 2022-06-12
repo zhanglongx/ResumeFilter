@@ -14,6 +14,20 @@ ResumeFilter is a resume GUI pre-screening program.
 
 - 无需安装额外的依赖库。
 
+# Build
+
+- Windows
+
+```ps
+    PS > go build -ldflags -H=windowsgui .
+```
+
+- Linux
+
+```bash
+    $ go build .
+```
+
 # Known Issues
 
 - 如果压缩包内有相同文件名的文件（在不同目录下），会产生冲突。此时，只会列举其中一个文件。
