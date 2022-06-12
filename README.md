@@ -2,7 +2,7 @@
 
 ResumeFilter is a GUI resume pre-screening program.
 
-# Features
+## Features
 
 - 自动解压压缩包内的文件，可识别多种格式（.rar，.zip等）。
 
@@ -14,7 +14,7 @@ ResumeFilter is a GUI resume pre-screening program.
 
 - 无需安装额外的依赖库。
 
-# Build
+## Build
 
 - Windows
 
@@ -28,7 +28,23 @@ ResumeFilter is a GUI resume pre-screening program.
     $ build.sh
 ```
 
-# Known Issues
+## Usage
+
+- Windows
+
+```ps
+    PS > resumefilter.exe <archiver>
+```
+
+💡*Tip*：可以[在SendTo中创建一个快捷方式](https://devblogs.microsoft.com/oldnewthing/20170403-00/?p=95885)，以方便操作。
+
+- Linux
+
+```bash
+    $ resumefilter <archiver>
+```
+
+## Known Issues
 
 - ⚠️*警告*：在关闭主窗口前，需要关闭所有已打开的PDF文件。
 
