@@ -24,13 +24,13 @@ const (
 	VERSION  = "1.0.0"
 )
 
-type CandControler struct {
+type CandController struct {
 	IsCheck bool
 	Cand    Candidate
 }
 
-type ArchiverControler struct {
-	CandControlers []*CandControler
+type ArchiverController struct {
+	CandControllers []*CandController
 
 	fsys   fs.FS
 	tmpDir string
@@ -55,7 +55,7 @@ func main() {
 		log.Fatal()
 	}
 
-	a := &ArchiverControler{}
+	a := &ArchiverController{}
 
 	err := a.Open(optFiles[0])
 	if err != nil {
@@ -85,18 +85,18 @@ func main() {
 	win.ShowAndRun()
 }
 
-func (c *CandControler) OnCheck(isCheck bool) {
+func (c *CandController) OnCheck(isCheck bool) {
 	c.IsCheck = isCheck
 }
 
-func (c *CandControler) OnButton() {
+func (c *CandController) OnButton() {
 	err := OpenFile(c.Cand.Path)
 	if err != nil {
 		log.Fatal(err)
 	}
 }
 
-func (a *ArchiverControler) Open(filename string) error {
+func (a *ArchiverController) Open(filename string) error {
 	fsys, err := archiver.FileSystem(filename)
 	if err != nil {
 		return err
@@ -114,11 +114,11 @@ func (a *ArchiverControler) Open(filename string) error {
 	return nil
 }
 
-func (a *ArchiverControler) Close() error {
+func (a *ArchiverController) Close() error {
 	return os.RemoveAll(a.tmpDir)
 }
 
-func (a *ArchiverControler) Parse() error {
+func (a *ArchiverController) Parse() error {
 	err := fs.WalkDir(a.fsys, ".", func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
 			return err
@@ -155,8 +155,8 @@ func (a *ArchiverControler) Parse() error {
 			return err
 		}
 
-		a.CandControlers = append(a.CandControlers,
-			&CandControler{Cand: Candidate{Path: dst.Name()}})
+		a.CandControllers = append(a.CandControllers,
+			&CandController{Cand: Candidate{Path: dst.Name()}})
 
 		return nil
 	})
@@ -165,7 +165,7 @@ func (a *ArchiverControler) Parse() error {
 		return err
 	}
 
-	for _, c := range a.CandControlers {
+	for _, c := range a.CandControllers {
 		err := c.Cand.Parse()
 		if err != nil {
 			return err
@@ -175,10 +175,10 @@ func (a *ArchiverControler) Parse() error {
 	return nil
 }
 
-func (a *ArchiverControler) makeUI() *fyne.Container {
+func (a *ArchiverController) makeUI() *fyne.Container {
 	var row []fyne.CanvasObject
 
-	for _, c := range a.CandControlers {
+	for _, c := range a.CandControllers {
 		check := widget.NewCheck("", c.OnCheck)
 
 		btn := widget.NewButton("打开", c.OnButton)
@@ -198,7 +198,7 @@ func (a *ArchiverControler) makeUI() *fyne.Container {
 
 	runBtn := widget.NewButton("输出", func() {
 		var outText string
-		for _, c := range a.CandControlers {
+		for _, c := range a.CandControllers {
 			if c.IsCheck {
 				outText += fmt.Sprintf("%s\n", filepath.Base(c.Cand.Path))
 			}
