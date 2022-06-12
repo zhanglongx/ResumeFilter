@@ -19,13 +19,13 @@ ResumeFilter is a GUI resume pre-screening program.
 - Windows
 
 ```ps
-    PS > go build -ldflags -H=windowsgui .
+    PS > build.bat
 ```
 
 - Linux
 
 ```bash
-    $ go build .
+    $ build.sh
 ```
 
 # Known Issues
