@@ -33,7 +33,7 @@ ResumeFilter is a GUI resume pre-screening program.
 - Windows
 
 ```ps
-    PS > resumefilter.exe <压缩包文件>
+    resumefilter.exe <压缩包文件>
 ```
 
 💡*Tip*：可以[在SendTo中创建一个快捷方式](https://devblogs.microsoft.com/oldnewthing/20170403-00/?p=95885)，以方便操作。
