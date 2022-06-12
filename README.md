@@ -32,7 +32,7 @@ ResumeFilter is a GUI resume pre-screening program.
 
 - Windows
 
-```ps
+```powershell
     resumefilter.exe <压缩包文件>
 ```
 
