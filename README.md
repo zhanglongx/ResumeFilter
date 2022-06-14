@@ -12,7 +12,23 @@ ResumeFilter is a GUI resume pre-screening program.
 
 - 支持跨平台。
 
-- 无需安装额外的依赖库。
+## Prerequisites
+
+ResumeFilter使用了[pdf2txt](https://github.com/pdfminer/pdfminer.six)，进行pdf内容抽取。
+
+- Windows
+
+```powershell
+    PS > pip3 install pdfminer.six
+```
+
+pdf2txt.py一般安装在类似于%APPDATA%\Python\Python37\Scripts的目录下，需要确保该目录在%PATH%变量中。
+
+- Linux
+
+```bash
+    $ apt install python3-pdfminer
+```
 
 ## Build
 

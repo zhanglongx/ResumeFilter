@@ -4,7 +4,6 @@ go 1.17
 
 require (
 	fyne.io/fyne/v2 v2.2.0
-	github.com/dslipak/pdf v0.0.1
 	github.com/mholt/archiver/v4 v4.0.0-alpha.7
 )
 

@@ -1,12 +1,10 @@
 package main
 
 import (
-	"bytes"
-	"os"
+	"io/ioutil"
+	"path/filepath"
 	"regexp"
 	"strings"
-
-	"github.com/dslipak/pdf"
 )
 
 type Candidate struct {
@@ -15,36 +13,20 @@ type Candidate struct {
 }
 
 func (c *Candidate) Parse() error {
-	f, err := os.Open(c.Path)
+	txt := strings.TrimSuffix(c.Path, filepath.Ext(c.Path))
+
+	err := Pdf2txt(txt, c.Path)
 	if err != nil {
 		return err
 	}
 
-	defer f.Close()
-
-	fi, err := f.Stat()
-	if err != nil {
-		return err
-	}
-
-	r, err := pdf.NewReader(f, fi.Size())
-	if err != nil {
-		return err
-	}
-
-	var buf bytes.Buffer
-	b, err := r.GetPlainText()
-	if err != nil {
-		return err
-	}
-
-	_, err = buf.ReadFrom(b)
+	b, err := ioutil.ReadFile(txt)
 	if err != nil {
 		return err
 	}
 
 	re := regexp.MustCompile(`\p{Han}{2,4}(大学|学院)`)
-	Colleges := re.FindAllString(buf.String(), -1)
+	Colleges := re.FindAllString(string(b), -1)
 
 	c.College = uniqCollege(Colleges)
 
