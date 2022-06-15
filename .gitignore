@@ -14,4 +14,4 @@
 # vendor/
 
 .vscode/
-resumefilter_windows_amd64.exe
+resumefilter_*

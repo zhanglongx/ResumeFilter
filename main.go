@@ -9,6 +9,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
 
 	"fyne.io/fyne/v2"
@@ -21,7 +22,7 @@ import (
 
 const (
 	APP_NAME = "ResumeFilter"
-	VERSION  = "1.1.0"
+	VERSION  = "1.1.2"
 )
 
 type CandController struct {
@@ -119,6 +120,7 @@ func (a *ArchiverController) Close() error {
 }
 
 func (a *ArchiverController) Parse() error {
+	var files []string
 	err := fs.WalkDir(a.fsys, ".", func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
 			return err
@@ -155,8 +157,7 @@ func (a *ArchiverController) Parse() error {
 			return err
 		}
 
-		a.CandControllers = append(a.CandControllers,
-			&CandController{Cand: Candidate{Path: dst.Name()}})
+		files = append(files, dst.Name())
 
 		return nil
 	})
@@ -165,11 +166,16 @@ func (a *ArchiverController) Parse() error {
 		return err
 	}
 
-	for _, c := range a.CandControllers {
-		err := c.Cand.Parse()
+	// XXX: fs.WalkDir() get randomly
+	sort.Strings(files)
+	for _, f := range files {
+		cc := &CandController{Cand: Candidate{Path: f}}
+		err := cc.Cand.Parse()
 		if err != nil {
 			return err
 		}
+
+		a.CandControllers = append(a.CandControllers, cc)
 	}
 
 	return nil
