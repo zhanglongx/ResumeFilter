@@ -18,11 +18,7 @@ ResumeFilter使用了[pdf2txt](https://github.com/pdfminer/pdfminer.six)，进�
 
 - Windows
 
-```powershell
-    PS > pip3 install pdfminer.six
-```
-
-pdf2txt.py一般安装在类似于%APPDATA%\Python\Python37\Scripts的目录下，需要确保该目录在%PATH%变量中。
+将pdf2txt.exe拷贝到%PATH%目录中。
 
 - Linux
 
