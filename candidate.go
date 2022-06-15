@@ -7,6 +7,10 @@ import (
 	"strings"
 )
 
+const (
+	MAX_COLLEGES = 3
+)
+
 type Candidate struct {
 	Path    string
 	College string
@@ -25,7 +29,7 @@ func (c *Candidate) Parse() error {
 		return err
 	}
 
-	re := regexp.MustCompile(`\p{Han}{2,4}(大学|学院)`)
+	re := regexp.MustCompile(`\p{Han}{2,5}(大学|学院)`)
 	Colleges := re.FindAllString(string(b), -1)
 
 	c.College = uniqCollege(Colleges)
@@ -46,6 +50,10 @@ func uniqCollege(list []string) string {
 		if !bFound {
 			t = append(t, s)
 		}
+	}
+
+	if len(t) > MAX_COLLEGES {
+		t = t[0:MAX_COLLEGES]
 	}
 
 	return strings.Join(t, "_")
