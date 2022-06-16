@@ -23,7 +23,7 @@ import (
 
 const (
 	APP_NAME = "ResumeFilter"
-	VERSION  = "1.1.2"
+	VERSION  = "1.1.4"
 
 	MAIN_ONCLOSE_TITLE = "提示"
 	MAIN_ONCLOSE_MSG   = "请关闭所有打开的pdf后退出"
