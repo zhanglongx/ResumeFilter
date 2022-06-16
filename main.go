@@ -15,6 +15,7 @@ import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/widget"
 	"github.com/mholt/archiver/v4"
 	"github.com/zhanglongx/ResumeFilter/theme"
@@ -23,6 +24,12 @@ import (
 const (
 	APP_NAME = "ResumeFilter"
 	VERSION  = "1.1.2"
+
+	MAIN_ONCLOSE_TITLE = "提示"
+	MAIN_ONCLOSE_MSG   = "请关闭所有打开的pdf后退出"
+
+	MAIN_BUTTON_OPEN   = "打开"
+	MAIN_BUTTON_OUTPUT = "输出"
 )
 
 type CandController struct {
@@ -80,9 +87,20 @@ func main() {
 	app.Settings().SetTheme(&theme.MyTheme{})
 
 	win := app.NewWindow(APP_NAME)
+	win.SetMaster()
 
 	// lets show GUI in parent window
 	win.SetContent(a.makeUI())
+	win.SetCloseIntercept(func() {
+		dialog.ShowConfirm(MAIN_ONCLOSE_TITLE,
+			MAIN_ONCLOSE_MSG,
+			func(isClose bool) {
+				if isClose {
+					win.Close()
+				}
+			},
+			win)
+	})
 	win.ShowAndRun()
 }
 
@@ -187,7 +205,7 @@ func (a *ArchiverController) makeUI() *fyne.Container {
 	for _, c := range a.CandControllers {
 		check := widget.NewCheck("", c.OnCheck)
 
-		btn := widget.NewButton("打开", c.OnButton)
+		btn := widget.NewButton(MAIN_BUTTON_OPEN, c.OnButton)
 
 		name := widget.NewLabel(filepath.Base(c.Cand.Path))
 		college := widget.NewLabel(c.Cand.College)
@@ -202,7 +220,7 @@ func (a *ArchiverController) makeUI() *fyne.Container {
 
 	output := widget.NewMultiLineEntry()
 
-	runBtn := widget.NewButton("输出", func() {
+	runBtn := widget.NewButton(MAIN_BUTTON_OUTPUT, func() {
 		var outText string
 		for _, c := range a.CandControllers {
 			if c.IsCheck {
